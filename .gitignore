@@ -1,1 +1,6 @@
-r
+# Folders
+Debug/
+
+# Files
+*.wsp
+*.zdsproj
