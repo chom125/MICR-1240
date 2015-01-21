@@ -5,3 +5,7 @@ Debug/
 *.wsp
 *.zdsproj
 Lab1.c
+pull.py
+push.py
+status.py
+notes.py
