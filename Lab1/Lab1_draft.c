@@ -12,10 +12,27 @@ Subject:					Embeded Systems 1
 Instructor:				Ken Patzel
 Program:					Lab 1
 Programmer:				Glenn Lopez
-Description:			Interface a Character LCD to a 4 bit Z8 (Zilog)
+Description:			Interface a character LCD to a 4 bit Z8 (Zilog)
 ---------------------------------------------------------------------------------*/
 
+// THIS IS A DRAFT - NOT FOR MARKING - TEST THIS FIRST
+
 #include <ez8.h>
+// #include <stdio.h> we dont need this yet if we use date or time or clock we use this lib
+
+// defines -- will use this in final draft
+// #define E 0x08							// Enable 
+// #define RW 0x02							// R/W
+// #define RS 0x04							// RS
+
+/*--
+// function allows use of pulse(E); vs PEOUT = PEOUT&0x08; less typing + easier to understand
+void pulse (unsigned int comm)
+{
+		PEOUT = PEOUT^comm;					// pulse command line	
+}
+
+--*/
 
 void init_ports(void);
 void delay(unsigned int);
@@ -33,7 +50,7 @@ init_ports();
 init_lcd();
 }	
 
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/ 		//init_port_E.h
 
 void init_ports(void)
 {
@@ -48,7 +65,7 @@ void init_ports(void)
 return;	
 }
 
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/			//delay.h
 
 void delay(unsigned int count)
 {
@@ -74,7 +91,7 @@ void delay(unsigned int count)
 return;	
 }
 
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/ 		//lcd.h
 void init_lcd(void)
 {
 soft_reset();
@@ -89,7 +106,7 @@ lcd_ready();
 cmd_write(0x01);
 }
 
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/			//lcd.h
 
 void soft_reset(void)
 {
@@ -120,7 +137,7 @@ PEOUT=0x28;
 PEOUT=0x20;
 }
 
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/			//lcd.h
 
 void cmd_write(unsigned char controlval)
 {
@@ -144,7 +161,7 @@ void cmd_write(unsigned char controlval)
 	lownib=lownib&0xF7;
 	PEOUT=lownib;
 }
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/			//lcd.h
 
 void data_write(unsigned char dataval)
 {
@@ -164,7 +181,7 @@ void data_write(unsigned char dataval)
 	PEOUT=lownib|0x0C;
 	PEOUT=lownib&0xF7;
 }
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/			//lcd.h
 
 void lcd_ready(void)
 {
@@ -184,7 +201,7 @@ void lcd_ready(void)
 	PEADDR=0X00;
 	
 }
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/			//lcd.h
 
 unsigned char rd_busy(void)
 {
