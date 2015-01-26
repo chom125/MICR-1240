@@ -148,18 +148,19 @@ void cmd_write(unsigned char controlval)
 	highnib=controlval&0xF0;
 	lownib=controlval<<4;
 	
-	PEOUT=0x00; //write first nib
+	//call lcd_read() function
+	lcd_ready();
+	
+	PEOUT=0x00;
+	
+	//high nibble
 	PEOUT=highnib;
-	highnib=highnib|0x08;
-	PEOUT=highnib;
-	highnib=highnib&0xF7;
+	PEOUT=highnib^0x08;
 	PEOUT=highnib;
 	
-	PEOUT=0x00; //write 2nd nib
+	//low nibble
 	PEOUT=lownib;
-	lownib=lownib|0x08;
-	PEOUT=lownib;
-	lownib=lownib&0xF7;
+	PEOUT=lownib^0x08;
 	PEOUT=lownib;
 }
 /*-------------------------------------------------------*/			//lcd.h
