@@ -18,7 +18,7 @@ Description:			Interface a character LCD to a 4 bit Z8 (Zilog)
 // THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT
 
 #include <ez8.h>
-// #include <stdio.h> we dont need this yet if we use date or time or clock we use this lib
+// #include <stdio.h> we can probably use this for delay function or time
 
 // defines -- will use this in final draft
 // #define E 0x08							// Enable 
@@ -44,14 +44,20 @@ void data_write(unsigned char);
 void lcd_ready(void);
 unsigned char rd_busy(void);
 
+/*------------------------------------------------------*/			//lab1.c
 void main(void)
 {
-init_ports();
-init_lcd();
-// msg string
+	//ln00 msg
+	//ln40 msg
+	
+	init_ports();
+	init_lcd();
+	
+	//cmd_write ln00
+	//cmd_write ln40
 }	
 
-/*-------------------------------------------------------*/ 		//init_port_E.h
+/*-------------------------------------------------------*/ 		//init_ports_gpio.h
 
 void init_ports(void)
 {
@@ -66,7 +72,7 @@ void init_ports(void)
 return;	
 }
 
-/*-------------------------------------------------------*/			//delay.h
+/*-------------------------------------------------------*/			//prog_delay.h
 
 void delay(unsigned int count)
 {
@@ -112,26 +118,20 @@ cmd_write(0x01);
 void soft_reset(void)
 {
 
-unsigned int time;
-	
-time=16;
-delay(time);
+delay(16);
 PEOUT=0x30;
 PEOUT=0x38;
 PEOUT=0x30;
 	
-time=5;
-delay(time);
+delay(5);
 PEOUT=0x30;
 PEOUT=0x38;
 PEOUT=0x30;	
 
-time=1;
-delay(time);
+delay(5);
 PEOUT=0x30;
 PEOUT=0x38;
 PEOUT=0x30;
-
 
 PEOUT=0x20;
 PEOUT=0x28;
