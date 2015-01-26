@@ -15,10 +15,16 @@ Programmer:				Glenn Lopez
 Description:			Interface a character LCD & Write 2 ln msg
 ---------------------------------------------------------------------------------*/
 
-// THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT
+// THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT 
 
+//includes for zilog
 #include <ez8.h>
-//#include <stdio.h> //we can use this for clock() or delay();
+//#include <stdio.h> 	//--- don't need yet
+
+//defines for pulse(); function
+#define E 0x00								// Enable 
+#define RW 0x00							// R/W
+#define RS 0x00							// RS
 
 //prototypes
 void init_ports(void);
@@ -52,7 +58,7 @@ msg=ln1_msg;
 cmd_write(0xC0);
 msg=ln2_msg;
 	while(0 != *msg){
-		data_write(*msg++);
+			data_write(*msg++);
 		}
 }		
 
@@ -234,3 +240,8 @@ unsigned char rd_busy(void)
 	return(busy);
 }
 /*-------------------------------------------------------*/			//lcd.h
+
+void pulse (unsigned int comm)
+{
+	PEOUT = PEOUT^comm;					// pulse command line
+}
