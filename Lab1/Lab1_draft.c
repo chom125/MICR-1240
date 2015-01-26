@@ -12,14 +12,13 @@ Subject:					Embeded Systems 1
 Instructor:				Ken Patzel
 Program:					Lab 1
 Programmer:				Glenn Lopez
-Description:			Interface a character LCD & Write 2 ln msg
+Description:			Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
 ---------------------------------------------------------------------------------*/
 
 // THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT 
 
-//includes for zilog
+//libraries
 #include <ez8.h>
-//#include <stdio.h> 	//--- don't need yet
 
 //defines for port subregisters
 #define DATA_DIR 0x01					// Data Direction
@@ -32,6 +31,10 @@ Description:			Interface a character LCD & Write 2 ln msg
 #define E 0x00								// Enable 
 #define RW 0x00							// R/W
 #define RS 0x00							// RS
+
+//change the LCD output message
+#define LN1 "Glenn"	//<--- EDIT THIS LINE
+#define LN2 "LOPEZ"	//<--- EDIT THIS LINE
 
 //prototypes
 void init_ports(void);
@@ -53,9 +56,8 @@ unsigned char rd_busy(void);
 \*****************************************************************************/
 void main(void)
 {
-	//int n; 								//--- don't need anymore
-	char ln1_msg[]="<first_line>"; 	//line 00
-	char ln2_msg[]="<second_line>";	//line 40
+	char ln1_msg[] = LN1; 	//line 1 (0x80) -- edit in #defines
+	char ln2_msg[] = LN2;	//line 2 (0xC0) -- edit in #defines
 	char *msg;
 
 	init_ports();
