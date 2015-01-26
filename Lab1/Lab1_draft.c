@@ -85,16 +85,20 @@ return;
 /*-------------------------------------------------------*/ 		//lcd.h
 void init_lcd(void)
 {
-soft_reset();
+	//call soft reset function
+	soft_reset();
 	
-lcd_ready();
-cmd_write(0x28);
-lcd_ready();
-cmd_write(0x0F);
-lcd_ready();
-cmd_write(0x06);
-lcd_ready();
-cmd_write(0x01);
+	lcd_ready();
+	cmd_write(0x28);
+	
+	lcd_ready();
+	cmd_write(0x0F);
+	
+	lcd_ready();
+	cmd_write(0x06);
+	
+	lcd_ready();
+	cmd_write(0x01);
 }
 
 /*-------------------------------------------------------*/			//lcd.h
