@@ -190,6 +190,8 @@ void lcd_ready(void)
 			;
 		}
 		
+		init_ports();
+		
 	//PEADDR=0X01;		//--- don't need anymore
 	//PECTL=0X00; 		//--- don't need anymore
 	//PEADDR=0X00;		//--- don't need anymore
