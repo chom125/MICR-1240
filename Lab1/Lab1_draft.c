@@ -21,6 +21,13 @@ Description:			Interface a character LCD & Write 2 ln msg
 #include <ez8.h>
 //#include <stdio.h> 	//--- don't need yet
 
+//defines for port subregisters
+#define DATA_DIR 0x01					// Data Direction
+#define ALT_FUN 0x02						// Alternate function
+#define OUT_CTL 0x03						// Output Control
+#define HDR_EN 0x04						// High Drive Enable
+#define SMRS_EN 0x05						// Stop Mode Recovery
+
 //defines for pulse(); function
 #define E 0x00								// Enable 
 #define RW 0x00							// R/W
@@ -34,6 +41,7 @@ void soft_reset(void);
 void cmd_write(unsigned char);
 void data_write(unsigned char);
 void lcd_ready(void);
+void pulse (unsigned int comm);
 unsigned char rd_busy(void);
 
 /*------------------------------------------------------*/			//lab1.c
@@ -66,19 +74,20 @@ msg=ln2_msg;
 
 void init_ports(void)
 {
-	//set pins to gpio mode
-	PEADDR=0X02;
-		PECTL=0X00;
+	//disable alternate function
+	PEADDR = ALT_FUN;
+	PECTL = 0X00;
 	
-	//output config 
-	PEADDR=0X01;
-		PECTL=0X00; 
+	//set pins as output
+	PEADDR = DATA_DIR;
+	PECTL = 0X00; 
 	
 	//set pins to push-pull
-	PEADDR=0X03;
-		PECTL=0X00;
-	 
-	PEADDR=0X00;
+	PEADDR = OUT_CTL;
+	PECTL = 0X00;
+	
+	//prevent changes 
+	PEADDR = 0X00;
 	return;	
 }
 
@@ -243,5 +252,5 @@ unsigned char rd_busy(void)
 
 void pulse (unsigned int comm)
 {
-	PEOUT = PEOUT^comm;					// pulse command line
+	PEOUT = PEOUT^comm;
 }
