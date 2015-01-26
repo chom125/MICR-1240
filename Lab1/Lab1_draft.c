@@ -12,12 +12,13 @@ Subject:					Embeded Systems 1
 Instructor:				Ken Patzel
 Program:					Lab 1
 Programmer:				Glenn Lopez
-Description:			Interface a character LCD to a 4 bit Z8 (Zilog)
+Description:			Interface a character LCD & Write 2 ln msg
 ---------------------------------------------------------------------------------*/
 
 // THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT
 
 #include <ez8.h>
+//#include <stdio.h> //we can use this for time or delay();
 
 //prototypes
 void init_ports(void);
@@ -42,27 +43,27 @@ void main(void)
 	//cmd_write ln40
 }	
 
-/*-------------------------------------------------------*/ 		//init_ports_gpio.h
+/*-------------------------------------------------------*/ 		//ports_gpio.h
 
 void init_ports(void)
 {
 	//set pins to gpio mode
 	PEADDR=0X02;
-	PECTL=0X00;
+		PECTL=0X00;
 	
 	//output config 
 	PEADDR=0X01;
-	PECTL=0X00; 
+		PECTL=0X00; 
 	
 	//set pins to push-pull
 	PEADDR=0X03;
-	PECTL=0X00;
+		PECTL=0X00;
 	 
 	PEADDR=0X00;
-return;	
+	return;	
 }
 
-/*-------------------------------------------------------*/			//prog_delay.h
+/*-------------------------------------------------------*/			//my_delay.h
 
 void delay(unsigned int count)
 {
@@ -78,8 +79,7 @@ void delay(unsigned int count)
 			delay--; 
 		}
 	}
-
-return;	
+	return;	
 }
 
 /*-------------------------------------------------------*/ 		//lcd.h
@@ -105,25 +105,24 @@ void init_lcd(void)
 
 void soft_reset(void)
 {
-
-delay(16);
-PEOUT=0x30;
-PEOUT=0x38;
-PEOUT=0x30;
+	delay(16);
+		PEOUT=0x30;
+		PEOUT=0x38;
+		PEOUT=0x30;
 	
-delay(5);
-PEOUT=0x30;
-PEOUT=0x38;
-PEOUT=0x30;	
+	delay(5);
+		PEOUT=0x30;
+		PEOUT=0x38;
+		PEOUT=0x30;	
 
-delay(5);
-PEOUT=0x30;
-PEOUT=0x38;
-PEOUT=0x30;
+	delay(5);
+		PEOUT=0x30;
+		PEOUT=0x38;
+		PEOUT=0x30;
 
-PEOUT=0x20;
-PEOUT=0x28;
-PEOUT=0x20;
+	PEOUT=0x20;
+	PEOUT=0x28;
+	PEOUT=0x20;
 }
 
 /*-------------------------------------------------------*/			//lcd.h
@@ -221,4 +220,4 @@ unsigned char rd_busy(void)
 	
 	return(busy);
 }
-/*-------------------------------------------------------*/
+/*-------------------------------------------------------*/			//lcd.h
