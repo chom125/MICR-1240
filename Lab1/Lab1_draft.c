@@ -69,22 +69,16 @@ void delay(unsigned int count)
 
 	unsigned int delay;
 	
-	for (count; count !=0; count--)
+	while(count>0)
 	{
-		for (delay=0xA7; delay !=0; delay--)
+		count--; 
+		delay=0xA7; 
+		while(delay>0) 
 		{
-			;
+			delay--; 
 		}
 	}
-	//while(time>0)   
-	//{
-	//	time--; //decrement time variable
-	//	delay=0xA7; //assign value to variable delay
-	//	while(delay>0) //exit loop when delay equals zero
-	//	{
-	//		delay--; //decrement delay
-	//	}
-	//}
+
 return;	
 }
 
