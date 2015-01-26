@@ -200,22 +200,24 @@ void lcd_ready(void)
 
 unsigned char rd_busy(void)
 {
-	char busyflag;
+	unsigned char busyflag=0x00;
 	unsigned char busy;
-	busyflag=0x00;
 	
-	PEOUT=0x02; //set to read
-	PEOUT=0x0A; //enable
+	PEOUT=0x02; 
+	PEOUT=0x0A; 
+	
 	busyflag=PEIN;
-	PEOUT=0x02;
-	//PEOUT=0x0A; //pulse to read second nib
-	//PEOUT=0x02;
-	
 	busyflag=busyflag&0x80;
-	if (busyflag==0x80)
-		busy=1;
-	else 
+	
+	PEOUT=0x02;
+	PEOUT=0x0A; 
+	PEOUT=0x02;
+	
+	//check busy flag
+	if (busyflag==0x0)
 		busy=0;
+	else 
+		busy=1;
 	
 	return(busy);
 }
