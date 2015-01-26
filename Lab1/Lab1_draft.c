@@ -44,34 +44,47 @@ void lcd_ready(void);
 void pulse (unsigned int comm);
 unsigned char rd_busy(void);
 
-/*------------------------------------------------------*/			//lab1.c
+
+
+/*****************************************************************************\
+ * Function:		main
+ * Input:			void
+ * Description:	this is the main function
+\*****************************************************************************/
 void main(void)
 {
-//int n; 								//--- don't need anymore
-char ln1_msg[]="<first_line>"; 	//line 00
-char ln2_msg[]="<second_line>";	//line 40
-char *msg;
+	//int n; 								//--- don't need anymore
+	char ln1_msg[]="<first_line>"; 	//line 00
+	char ln2_msg[]="<second_line>";	//line 40
+	char *msg;
 
-init_ports();
-init_lcd();
+	init_ports();
+	init_lcd();
 
-//line 1 data write
-cmd_write(0x80);
-msg=ln1_msg;
-	while(0 != *msg){
-		data_write(*msg++);
-		}
+	//line 1 data write
+	cmd_write(0x80);
+	msg=ln1_msg;
+		while(0 != *msg)
+			{
+				data_write(*msg++);
+			}
 
 //line 2 data write
 cmd_write(0xC0);
 msg=ln2_msg;
-	while(0 != *msg){
+	while(0 != *msg)
+		{
 			data_write(*msg++);
 		}
 }		
 
-/*-------------------------------------------------------*/ 		//ports_gpio.h
 
+
+/*****************************************************************************\
+ * Function:		init_ports
+ * Input:			void
+ * Description:	this initiates port E
+\*****************************************************************************/
 void init_ports(void)
 {
 	//disable alternate function
@@ -82,7 +95,7 @@ void init_ports(void)
 	PEADDR = DATA_DIR;
 	PECTL = 0X00; 
 	
-	//set pins to push-pull
+	//set pins to push-pull type
 	PEADDR = OUT_CTL;
 	PECTL = 0X00;
 	
@@ -91,8 +104,13 @@ void init_ports(void)
 	return;	
 }
 
-/*-------------------------------------------------------*/			//my_delay.h
 
+
+/*****************************************************************************\
+ * Function:		delay
+ * Input:			count
+ * Description:	this delay is in ms
+\*****************************************************************************/
 void delay(unsigned int count)
 {
 
@@ -110,7 +128,13 @@ void delay(unsigned int count)
 	return;	
 }
 
-/*-------------------------------------------------------*/ 		//lcd.h
+
+
+/*****************************************************************************\
+ * Function:		init_lcd
+ * Input:			void
+ * Description:	initializes lcd
+\*****************************************************************************/
 void init_lcd(void)
 {
 	//call soft reset function
@@ -129,32 +153,42 @@ void init_lcd(void)
 	cmd_write(0x01);
 }
 
-/*-------------------------------------------------------*/			//lcd.h
 
+
+/*****************************************************************************\
+ * Function:		soft_reset
+ * Input:			void
+ * Description:	
+\*****************************************************************************/
 void soft_reset(void)
 {
 	delay(16);
-		PEOUT=0x30;
-		PEOUT=0x38;
-		PEOUT=0x30;
+	PEOUT=0x30;
+	PEOUT=0x38;
+	PEOUT=0x30;
 	
 	delay(5);
-		PEOUT=0x30;
-		PEOUT=0x38;
-		PEOUT=0x30;	
+	PEOUT=0x30;
+	PEOUT=0x38;
+	PEOUT=0x30;	
 
 	delay(5);
-		PEOUT=0x30;
-		PEOUT=0x38;
-		PEOUT=0x30;
+	PEOUT=0x30;
+	PEOUT=0x38;
+	PEOUT=0x30;
 
 	PEOUT=0x20;
 	PEOUT=0x28;
 	PEOUT=0x20;
 }
 
-/*-------------------------------------------------------*/			//lcd.h
 
+
+/*****************************************************************************\
+ * Function:		cmd_write
+ * Input:			controlval
+ * Description:	
+\*****************************************************************************/
 void cmd_write(unsigned char controlval)
 {
 	
@@ -178,8 +212,14 @@ void cmd_write(unsigned char controlval)
 	PEOUT=lownib^0x08;
 	PEOUT=lownib;
 }
-/*-------------------------------------------------------*/			//lcd.h
 
+
+
+/*****************************************************************************\
+ * Function:		data_write
+ * Input:			dataval
+ * Description:	
+\*****************************************************************************/
 void data_write(unsigned char dataval)
 {
 	char highnibdata, lownibdata;
@@ -199,10 +239,16 @@ void data_write(unsigned char dataval)
 	//low nibble data
 	PEOUT=lownibdata;
 	PEOUT=lownibdata^0x08;
-	PEOUT=lownibdata;	
+	PEOUT=lownibdata;
 }
-/*-------------------------------------------------------*/			//lcd.h
 
+
+
+/*****************************************************************************\
+ * Function:		lcd_ready
+ * Input:			void
+ * Description:	
+\*****************************************************************************/
 void lcd_ready(void)
 {
 	//set port E to be inputs
@@ -223,8 +269,14 @@ void lcd_ready(void)
 	//PECTL=0X00; 		//--- don't need anymore
 	//PEADDR=0X00;		//--- don't need anymore
 }
-/*-------------------------------------------------------*/			//lcd.h
 
+
+
+/*****************************************************************************\
+ * Function:		rd_busy
+ * Input:			void
+ * Description:	
+\*****************************************************************************/
 unsigned char rd_busy(void)
 {
 	unsigned char busyflag=0x00;
@@ -237,7 +289,7 @@ unsigned char rd_busy(void)
 	busyflag=busyflag&0x80;
 	
 	PEOUT=0x02;
-	PEOUT=0x0A; 
+	PEOUT=0x0A;
 	PEOUT=0x02;
 	
 	//check busy flag
@@ -248,8 +300,14 @@ unsigned char rd_busy(void)
 	
 	return(busy);
 }
-/*-------------------------------------------------------*/			//lcd.h
 
+
+
+/*****************************************************************************\
+ * Function:		pulse
+ * Input:			comm
+ * Description:	
+\*****************************************************************************/
 void pulse (unsigned int comm)
 {
 	PEOUT = PEOUT^comm;
