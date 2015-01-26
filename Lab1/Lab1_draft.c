@@ -164,12 +164,12 @@ void data_write(unsigned char dataval)
 	
 	PEOUT=0x04;
 	
-	//highnib data
+	//high nibble data
 	PEOUT=highnibdata;
 	PEOUT=highnibdata^0x08;
 	PEOUT=highnibdata;
 	
-	//lownib data
+	//low nibble data
 	PEOUT=lownibdata;
 	PEOUT=lownibdata^0x08;
 	PEOUT=lownibdata;	
@@ -178,21 +178,21 @@ void data_write(unsigned char dataval)
 
 void lcd_ready(void)
 {
-	
-	
+	//set port E to be inputs
 	PEADDR=0X01;
-	PECTL=0XF0; //4 lines are now I/P
+	PECTL=0XF0;
+	
 	PEADDR=0X00;
 	
-	while(rd_busy())
+	while(rd_busy()==1)
 		{
-			rd_busy();
+			//rd_busy(); //--- don't need anymore
+			;
 		}
 		
-	PEADDR=0X01;
-	PECTL=0X00; //all output
-	PEADDR=0X00;
-	
+	//PEADDR=0X01;		//--- don't need anymore
+	//PECTL=0X00; 		//--- don't need anymore
+	//PEADDR=0X00;		//--- don't need anymore
 }
 /*-------------------------------------------------------*/			//lcd.h
 
