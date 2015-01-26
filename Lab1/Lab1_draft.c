@@ -33,8 +33,8 @@ Description:			Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
 #define RS 0x00							// RS
 
 //change the LCD output message
-#define LN1 "Glenn"	//<--- EDIT THIS LINE
-#define LN2 "LOPEZ"	//<--- EDIT THIS LINE
+#define LN1 "<line one msg>"			//<--- EDIT THIS LINE
+#define LN2 "<line two msg>"			//<--- EDIT THIS LINE
 
 //prototypes
 void init_ports(void);
@@ -56,8 +56,8 @@ unsigned char rd_busy(void);
 \*****************************************************************************/
 void main(void)
 {
-	char ln1_msg[] = LN1; 	//line 1 (0x80) -- edit in #defines
-	char ln2_msg[] = LN2;	//line 2 (0xC0) -- edit in #defines
+	char ln1_msg[] = LN1; 	//line 1 (0x80) -- edit in #define
+	char ln2_msg[] = LN2;	//line 2 (0xC0) -- edit in #define
 	char *msg;
 
 	init_ports();
@@ -165,6 +165,10 @@ void init_lcd(void)
 void soft_reset(void)
 {
 	delay(16);
+	//pulse(0x30);			//<-- not sure if this works (will implement later)
+	//pulse(0x38);
+	//pulse(0x30);
+	
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;
@@ -312,5 +316,5 @@ unsigned char rd_busy(void)
 \*****************************************************************************/
 void pulse (unsigned int comm)
 {
-	PEOUT = PEOUT^comm;
+	PEOUT = comm;
 }
