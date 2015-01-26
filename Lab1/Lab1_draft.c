@@ -18,25 +18,10 @@ Description:			Interface a character LCD to a 4 bit Z8 (Zilog)
 // THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT
 
 #include <ez8.h>
-// #include <stdio.h> we can probably use this for delay function or time
 
-// defines -- will use this in final draft
-// #define E 0x08							// Enable 
-// #define RW 0x02							// R/W
-// #define RS 0x04							// RS
-
-/*--
-// function allows use of pulse(E); vs PEOUT = PEOUT&0x08; less typing + easier to understand
-void pulse (unsigned int comm)
-{
-		PEOUT = PEOUT^comm;					// pulse command line	
-}
-
---*/
-
+//prototypes
 void init_ports(void);
 void delay(unsigned int);
-
 void init_lcd(void);
 void soft_reset(void);
 void cmd_write(unsigned char);
@@ -61,13 +46,18 @@ void main(void)
 
 void init_ports(void)
 {
-	
+	//set pins to gpio mode
 	PEADDR=0X02;
-	PECTL=0X00; //no alt function
+	PECTL=0X00;
+	
+	//output config 
 	PEADDR=0X01;
-	PECTL=0X00; //all output
+	PECTL=0X00; 
+	
+	//set pins to push-pull
 	PEADDR=0X03;
-	PECTL=0X00; //set to pushpull
+	PECTL=0X00;
+	 
 	PEADDR=0X00;
 return;	
 }
