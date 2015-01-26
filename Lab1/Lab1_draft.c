@@ -18,7 +18,7 @@ Description:			Interface a character LCD & Write 2 ln msg
 // THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT
 
 #include <ez8.h>
-//#include <stdio.h> //we can use this for time or delay();
+//#include <stdio.h> //we can use this for clock() or delay();
 
 //prototypes
 void init_ports(void);
@@ -33,15 +33,28 @@ unsigned char rd_busy(void);
 /*------------------------------------------------------*/			//lab1.c
 void main(void)
 {
-	//ln00 msg
-	//ln40 msg
-	
-	init_ports();
-	init_lcd();
-	
-	//cmd_write ln00
-	//cmd_write ln40
-}	
+//int n; 								//--- don't need anymore
+char ln1_msg[]="<first_line>"; 	//line 00
+char ln2_msg[]="<second_line>";	//line 40
+char *msg;
+
+init_ports();
+init_lcd();
+
+//line 1 data write
+cmd_write(0x80);
+msg=ln1_msg;
+	while(0 != *msg){
+		data_write(*msg++);
+		}
+
+//line 2 data write
+cmd_write(0xC0);
+msg=ln2_msg;
+	while(0 != *msg){
+		data_write(*msg++);
+		}
+}		
 
 /*-------------------------------------------------------*/ 		//ports_gpio.h
 
