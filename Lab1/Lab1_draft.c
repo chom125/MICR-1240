@@ -15,7 +15,7 @@ Programmer:				Glenn Lopez
 Description:			Interface a character LCD to a 4 bit Z8 (Zilog)
 ---------------------------------------------------------------------------------*/
 
-// THIS IS A DRAFT - NOT FOR MARKING - TEST THIS FIRST
+// THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT
 
 #include <ez8.h>
 // #include <stdio.h> we dont need this yet if we use date or time or clock we use this lib
@@ -48,6 +48,7 @@ void main(void)
 {
 init_ports();
 init_lcd();
+// msg string
 }	
 
 /*-------------------------------------------------------*/ 		//init_port_E.h
