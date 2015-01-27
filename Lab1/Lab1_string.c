@@ -42,7 +42,7 @@ void main(void)
 	//line 1 data write
 	cmd_write(0x80);
 	msg=ln1_msg;
-	while(0 !=*msg)
+	while(0 != *msg)
 	{
 		data_write(*msg++);
 	}
@@ -50,7 +50,7 @@ void main(void)
 	//line 2 data write
 	cmd_write(0xC0);
 	msg=ln2_msg;
-	while(0 !=*msg)
+	while(0 != *msg)
 	{
 		data_write(*msg++);
 	}

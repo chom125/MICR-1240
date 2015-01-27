@@ -267,5 +267,6 @@ void pulse (unsigned int comm)
 	PEOUT = comm;
 }
 
-#endif	//GLENN_LCD_H_
 --*/
+
+#endif	//GLENN_LCD_H_

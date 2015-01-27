@@ -20,7 +20,7 @@ Description:		Tests long string
 #include "glenn_lcd.h"
 
 //change the LCD output message
-#define LONG_MSG "<long msg goes here>"			//<--- EDIT THIS LINE
+#define TICKER "Now this is a story all about how my life got flipped turned upside down and Id like to take a minute just sit right there ill tell you how I became the prince of a town called Bel Air"			//<--- EDIT THIS LINE
 
 
 
@@ -33,8 +33,8 @@ void main(void)
 {
 	char line=1;
 	int n=0x00;
-	char message[]="LONG_MSG";
-	char *p_message;
+	char message[]=TICKER;
+	char *msg;
 	
 	init_ports();
 	init_lcd();
@@ -42,9 +42,9 @@ void main(void)
 	
 	cmd_write(0x80);
 	lcd_ready();
-	p_message=message;
-		while(0 != *p_message){
-			data_write(*p_message++);
+	msg=message;
+		while(0 != *msg){
+			data_write(*msg++);
 			n++;
 			if(n==0x10){
 			if(line==1)
@@ -57,8 +57,7 @@ void main(void)
 			else
 				cmd_write(0xC0);
 			n=0x00;
-			delay(8000);}
-		
+			delay(8000);}	
 		}
 }	
 
