@@ -31,70 +31,77 @@ Description:
 \*****************************************************************************/
 void main(void)
 {
-int sec=55;
-int min=59;
-int hour=23;
-int day=23;
-int month=03;
-int year=1987;
-char time[9];
-char date[11];
-char *msg;
+	int sec=55;
+	int min=59;
+	int hour=23;
+	int day=23;
+	int month=03;
+	int year=1987;
+	char time[9];
+	char date[11];
+	char *msg;
 	
-init_ports();
-init_lcd();
+	init_ports();
+	init_lcd();
 
-while(1){
-	delay(4000);
-	sec++;
+	while(1)
+	{
+		delay(4000);
+		sec++;
 	
 		
-	if (sec==60){
-		sec=0;
-		min++;
+		if (sec==60)
+		{
+			sec=0;
+			min++;
 		}
 	
-	if (min==60){
-		min=0;
-		hour++;
+		if (min==60)
+		{
+			min=0;
+			hour++;
 		}
 		
-	if (hour==24){
-		hour=0;
-		day++;
+		if (hour==24)
+		{
+			hour=0;
+			day++;
 		}
 		
-	if (day==31){
-		day=1;
-		month++;
+		if (day==31)
+		{
+			day=1;
+			month++;
 		}
 	
-	if (month==13){
-		month=1;
-		year++;
+		if (month==13)
+		{
+			month=1;
+			year++;
 		}
 		
-cmd_write(0x84);
-	sprintf(time,"%02d:%02d:%02d",hour, min, sec);
-	lcd_ready();
-	msg=time;
+		cmd_write(0x84);
+		sprintf(time,"%02d:%02d:%02d",hour, min, sec);
+		lcd_ready();
+		msg=time;
 	
-	while(0 != *msg){
-	data_write(*msg++);
+		while(0 != *msg)
+		{
+			data_write(*msg++);
 		}
 		
-	cmd_write(0xC3);
-	sprintf(date,"%02d/%02d/%4d",day, month, year);
-	lcd_ready();
-	msg=date;
+		cmd_write(0xC3);
+		sprintf(date,"%02d/%02d/%4d",day, month, year);
+		lcd_ready();
+		msg=date;
 		
-	while(0 != *msg){
-		data_write(*msg++);
+		while(0 != *msg)
+		{
+			data_write(*msg++);
 		}
 		
 		
-	}
-	
+	}		
 }	
 
 
