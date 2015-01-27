@@ -13,9 +13,7 @@ Instructor:			Ken Patzel
 Program:				Lab 1
 Programmer:			Glenn Lopez
 Description:		Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
----------------------------------------------------------------------------------*/
-
-// THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT 
+---------------------------------------------------------------------------------*/ 
 
 //libraries
 #include <ez8.h>

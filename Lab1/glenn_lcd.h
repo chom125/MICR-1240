@@ -8,10 +8,14 @@
 #define HDR_EN 0x04						// High Drive Enable
 #define SMRS_EN 0x05						// Stop Mode Recovery
 
+/*-- D I S A B L E D --
+//not yet implemented
+
 //defines for pulse(); function
 #define E 0x00								// Enable 
 #define RW 0x00							// R/W
 #define RS 0x00							// RS
+--*/
 
 //prototypes
 void init_ports(void);
@@ -254,9 +258,14 @@ unsigned char rd_busy(void)
  * Input:			comm
  * Description:	
 \*****************************************************************************/
+
+/*--	D I S A B L E D --
+//not yet implemented
+
 void pulse (unsigned int comm)
 {
 	PEOUT = comm;
 }
 
 #endif	//GLENN_LCD_H_
+--*/

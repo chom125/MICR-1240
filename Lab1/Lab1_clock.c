@@ -15,8 +15,6 @@ Programmer:			Glenn Lopez
 Description:		Displays preset date - uses counters	
 ---------------------------------------------------------------------------------*/
 
-// THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT 
-
 //libraries
 #include <ez8.h>
 #include <stdio.h>
@@ -48,7 +46,6 @@ void main(void)
 	{
 		delay(4000);
 		sec++;
-	
 		
 		if (sec==60)
 		{
