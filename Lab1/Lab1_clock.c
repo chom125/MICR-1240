@@ -9,10 +9,10 @@
 888       8888888888 "Y8888P" 888   T88b   8888888888888888       888  "Y8888P" 
 
 Subject:				Embeded Systems 1
-Instructor:				Ken Patzel
+Instructor:			Ken Patzel
 Program:				Lab 1
-Programmer:				Glenn Lopez
-Description:			
+Programmer:			Glenn Lopez
+Description:		Displays preset date - uses counters	
 ---------------------------------------------------------------------------------*/
 
 // THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT 
@@ -99,8 +99,6 @@ void main(void)
 		{
 			data_write(*msg++);
 		}
-		
-		
 	}		
 }	
 

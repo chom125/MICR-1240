@@ -8,11 +8,11 @@
 888   "   888  888  Y88b  d88P888  T88b      888  888"            888 Y88b  d88P
 888       8888888888 "Y8888P" 888   T88b   8888888888888888       888  "Y8888P" 
 
-Subject:					Embeded Systems 1
-Instructor:				Ken Patzel
-Program:					Lab 1
-Programmer:				Glenn Lopez
-Description:			Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
+Subject:				Embeded Systems 1
+Instructor:			Ken Patzel
+Program:				Lab 1
+Programmer:			Glenn Lopez
+Description:		Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
 ---------------------------------------------------------------------------------*/
 
 // THIS IS A DRAFT - NOT FOR MARKING - THIS IS A DRAFT 
@@ -20,6 +20,10 @@ Description:			Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
 //libraries
 #include <ez8.h>
 #include "glenn_lcd.h"
+
+//change the LCD output message
+#define LN1 "<line one msg>"			//<--- EDIT THIS LINE
+#define LN2 "<line two msg>"			//<--- EDIT THIS LINE
 
 
 
@@ -40,18 +44,18 @@ void main(void)
 	//line 1 data write
 	cmd_write(0x80);
 	msg=ln1_msg;
-		while(0 != *msg)
-			{
-				data_write(*msg++);
-			}
+	while(0 !=*msg)
+	{
+		data_write(*msg++);
+	}
 
-//line 2 data write
-cmd_write(0xC0);
-msg=ln2_msg;
-	while(0 != *msg)
-		{
-			data_write(*msg++);
-		}
+	//line 2 data write
+	cmd_write(0xC0);
+	msg=ln2_msg;
+	while(0 !=*msg)
+	{
+		data_write(*msg++);
+	}
 }	
 
 
