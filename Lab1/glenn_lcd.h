@@ -1,7 +1,20 @@
 #ifndef GLENN_LCD_H_
 #define GLENN_LCD_H_
 
+//defines for port subregisters
+#define DATA_DIR 0x01					// Data Direction
+#define ALT_FUN 0x02						// Alternate function
+#define OUT_CTL 0x03						// Output Control
+#define HDR_EN 0x04						// High Drive Enable
+#define SMRS_EN 0x05						// Stop Mode Recovery
+
+//defines for pulse(); function
+#define E 0x00								// Enable 
+#define RW 0x00							// R/W
+#define RS 0x00							// RS
+
 //prototypes
+void init_ports(void);
 void delay(unsigned int);
 void init_lcd(void);
 void soft_reset(void);
@@ -10,6 +23,32 @@ void data_write(unsigned char);
 void lcd_ready(void);
 void pulse (unsigned int comm);
 unsigned char rd_busy(void);
+
+
+
+/*****************************************************************************\
+ * Function:		init_ports
+ * Input:			void
+ * Description:	this initiates port E
+\*****************************************************************************/
+void init_ports(void)
+{
+	//disable alternate function
+	PEADDR = ALT_FUN;
+	PECTL = 0X00;
+	
+	//set pins as output
+	PEADDR = DATA_DIR;
+	PECTL = 0X00; 
+	
+	//set pins to push-pull type
+	PEADDR = OUT_CTL;
+	PECTL = 0X00;
+	
+	//prevent changes 
+	PEADDR = 0X00;
+	return;	
+}
 
 
 

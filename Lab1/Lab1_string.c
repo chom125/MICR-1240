@@ -21,25 +21,6 @@ Description:			Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
 #include <ez8.h>
 #include "glenn_lcd.h"
 
-//defines for port subregisters
-#define DATA_DIR 0x01					// Data Direction
-#define ALT_FUN 0x02						// Alternate function
-#define OUT_CTL 0x03						// Output Control
-#define HDR_EN 0x04						// High Drive Enable
-#define SMRS_EN 0x05						// Stop Mode Recovery
-
-//defines for pulse(); function
-#define E 0x00								// Enable 
-#define RW 0x00							// R/W
-#define RS 0x00							// RS
-
-//change the LCD output message
-#define LN1 "<line one msg>"			//<--- EDIT THIS LINE
-#define LN2 "<line two msg>"			//<--- EDIT THIS LINE
-
-//prototypes
-void init_ports(void);
-
 
 
 /*****************************************************************************\
@@ -75,26 +56,3 @@ msg=ln2_msg;
 
 
 
-/*****************************************************************************\
- * Function:		init_ports
- * Input:			void
- * Description:	this initiates port E
-\*****************************************************************************/
-void init_ports(void)
-{
-	//disable alternate function
-	PEADDR = ALT_FUN;
-	PECTL = 0X00;
-	
-	//set pins as output
-	PEADDR = DATA_DIR;
-	PECTL = 0X00; 
-	
-	//set pins to push-pull type
-	PEADDR = OUT_CTL;
-	PECTL = 0X00;
-	
-	//prevent changes 
-	PEADDR = 0X00;
-	return;	
-}
