@@ -8,9 +8,9 @@
 888   "   888  888  Y88b  d88P888  T88b      888  888"            888 Y88b  d88P
 888       8888888888 "Y8888P" 888   T88b   8888888888888888       888  "Y8888P" 
 
-Subject:					Embeded Systems 1
+Subject:				Embeded Systems 1
 Instructor:				Ken Patzel
-Program:					Lab 1
+Program:				Lab 1
 Programmer:				Glenn Lopez
 Description:			
 ---------------------------------------------------------------------------------*/
