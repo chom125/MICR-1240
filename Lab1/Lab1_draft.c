@@ -165,10 +165,6 @@ void init_lcd(void)
 void soft_reset(void)
 {
 	delay(16);
-	//pulse(0x30);			//<-- not sure if this works (will implement later)
-	//pulse(0x38);
-	//pulse(0x30);
-	
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;
