@@ -17,7 +17,7 @@ Description:		Displays preset date - uses counters
 
 #include <ez8.h>				//used for Z8 uC port
 #include <stdio.h>			//used for sprintf 
-#include "glenn_lcd.h"		//used to isolate LCD functions from main
+#include "glenn_lcd.h"		//used to isolate LCD functions from main function
 
 
 
