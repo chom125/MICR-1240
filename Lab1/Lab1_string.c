@@ -15,11 +15,10 @@ Programmer:			Glenn Lopez
 Description:		Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
 ---------------------------------------------------------------------------------*/ 
 
-//libraries
-#include <ez8.h>
-#include "glenn_lcd.h"
+#include <ez8.h>				//used for Z8 uC port
+//#include <stdio.h>			//used for sprintf - disabled to save code space
+#include "glenn_lcd.h"		//used to isolate LCD functions from main
 
-//change the LCD output message
 #define LN1 "<line one msg>"			//<--- EDIT THIS LINE
 #define LN2 "<line two msg>"			//<--- EDIT THIS LINE
 

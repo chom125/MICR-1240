@@ -8,25 +8,25 @@
 #define HDR_EN 0x04						// High Drive Enable
 #define SMRS_EN 0x05						// Stop Mode Recovery
 
-/*-- D I S A B L E D --
+/*-- D I S A B L E D --*
 //not yet implemented
 
 //defines for pulse(); function
 #define E 0x00								// Enable 
 #define RW 0x00							// R/W
 #define RS 0x00							// RS
---*/
+/*--*/
 
 //prototypes
-void init_ports(void);
-void delay(unsigned int);
-void init_lcd(void);
-void soft_reset(void);
-void cmd_write(unsigned char);
-void data_write(unsigned char);
-void lcd_ready(void);
-void pulse (unsigned int comm);
-unsigned char rd_busy(void);
+void init_ports(void);					// Initializes ports
+void delay(unsigned int);				// Defined delays (ms)
+void init_lcd(void);						// initializes LCD 
+void soft_reset(void);					// 
+void cmd_write(unsigned char);		// 
+void data_write(unsigned char);		// 
+void lcd_ready(void);					// 
+void pulse (unsigned int comm);		// 
+unsigned char rd_busy(void);			// 
 
 
 
@@ -34,6 +34,7 @@ unsigned char rd_busy(void);
  * Function:		init_ports
  * Input:			void
  * Description:	this initiates port E
+ * Dependencies:	none
 \*****************************************************************************/
 void init_ports(void)
 {
@@ -60,6 +61,7 @@ void init_ports(void)
  * Function:		delay
  * Input:			count
  * Description:	this delay is in ms
+ * Dependencies:	none
 \*****************************************************************************/
 void delay(unsigned int count)
 {
@@ -84,6 +86,7 @@ void delay(unsigned int count)
  * Function:		init_lcd
  * Input:			void
  * Description:	initializes lcd
+ * Dependencies:	soft_reset | lcd_ready | cmd_write
 \*****************************************************************************/
 void init_lcd(void)
 {
@@ -109,6 +112,7 @@ void init_lcd(void)
  * Function:		soft_reset
  * Input:			void
  * Description:	
+ * Dependencies:	delay |
 \*****************************************************************************/
 void soft_reset(void)
 {
@@ -122,7 +126,7 @@ void soft_reset(void)
 	PEOUT=0x38;
 	PEOUT=0x30;	
 
-	delay(5);
+	delay(1);
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;
@@ -138,6 +142,7 @@ void soft_reset(void)
  * Function:		cmd_write
  * Input:			controlval
  * Description:	
+ * Dependencies:	lcd_ready | 
 \*****************************************************************************/
 void cmd_write(unsigned char controlval)
 {
@@ -168,7 +173,8 @@ void cmd_write(unsigned char controlval)
 /*****************************************************************************\
  * Function:		data_write
  * Input:			dataval
- * Description:	
+ * Description:
+ * Dependencies:	lcd_ready |	
 \*****************************************************************************/
 void data_write(unsigned char dataval)
 {
@@ -198,6 +204,7 @@ void data_write(unsigned char dataval)
  * Function:		lcd_ready
  * Input:			void
  * Description:	
+ * Dependencies:	rd_busy | init_ports
 \*****************************************************************************/
 void lcd_ready(void)
 {
@@ -226,6 +233,7 @@ void lcd_ready(void)
  * Function:		rd_busy
  * Input:			void
  * Description:	
+ * Dependencies:	none
 \*****************************************************************************/
 unsigned char rd_busy(void)
 {
@@ -256,10 +264,11 @@ unsigned char rd_busy(void)
 /*****************************************************************************\
  * Function:		pulse
  * Input:			comm
- * Description:	
+ * Description:
+ * Dependencies:	none	
 \*****************************************************************************/
 
-/*--	D I S A B L E D --
+/*--	D I S A B L E D --*
 //not yet implemented
 
 void pulse (unsigned int comm)
@@ -267,6 +276,6 @@ void pulse (unsigned int comm)
 	PEOUT = comm;
 }
 
---*/
+/*--*/
 
 #endif	//GLENN_LCD_H_

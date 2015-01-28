@@ -15,12 +15,12 @@ Programmer:			Glenn Lopez
 Description:		Tests long string  
 ---------------------------------------------------------------------------------*/ 
 
-//libraries
-#include <ez8.h>
-#include "glenn_lcd.h"
+#include <ez8.h>				//used for Z8 uC port
+//#include <stdio.h>			//used for sprintf - disabled to save code space
+#include "glenn_lcd.h"		//used to isolate LCD functions from main
 
-//change the LCD output message
-#define TICKER "Now this is a story all about how my life got flipped turned upside down and Id like to take a minute just sit right there ill tell you how I became the prince of a town called Bel Air"			//<--- EDIT THIS LINE
+//LCD OUTPUT - EDIT THIS LINE
+#define TICKER "Long message will cycle between line 1 and line 2"			//<--- EDIT THIS LINE
 
 
 

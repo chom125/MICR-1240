@@ -15,10 +15,9 @@ Programmer:			Glenn Lopez
 Description:		Displays preset date - uses counters	
 ---------------------------------------------------------------------------------*/
 
-//libraries
-#include <ez8.h>
-#include <stdio.h>
-#include "glenn_lcd.h"
+#include <ez8.h>				//used for Z8 uC port
+#include <stdio.h>			//used for sprintf 
+#include "glenn_lcd.h"		//used to isolate LCD functions from main
 
 
 
@@ -29,6 +28,7 @@ Description:		Displays preset date - uses counters
 \*****************************************************************************/
 void main(void)
 {
+	//store a preset date -- make it so it rolls over
 	int sec=55;
 	int min=59;
 	int hour=23;
@@ -42,7 +42,7 @@ void main(void)
 	init_ports();
 	init_lcd();
 
-	while(1)
+	while(1) //increment sec & carry over
 	{
 		delay(4000);
 		sec++;
@@ -76,9 +76,9 @@ void main(void)
 			month=1;
 			year++;
 		}
-		
+		 
 		cmd_write(0x84);
-		sprintf(time,"%02d:%02d:%02d",hour, min, sec);
+		sprintf(time,"%02d:%02d:%02d",hour, min, sec);	//put var into %02d
 		lcd_ready();
 		msg=time;
 	
