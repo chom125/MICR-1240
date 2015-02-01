@@ -27,19 +27,19 @@ Description:		Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
 /*****************************************************************************\
  * Function:		main
  * Input:			void
- * Description:	this is the main function
+ * Description:	this function writes on 2 lines of the LCD
 \*****************************************************************************/
 void main(void)
 {
 	char ln1_msg[] = LN1; 	//line 1 (0x80) -- edit in #define
 	char ln2_msg[] = LN2;	//line 2 (0xC0) -- edit in #define
-	char *msg;
+	char *msg;					//msg pointer
 
 	init_ports();
 	init_lcd();
 
 	//line 1 data write
-	cmd_write(0x80);
+	cmd_write(0x80);			//0x80 is 1st line | 1st character on LCD
 	msg=ln1_msg;
 	while(0 != *msg)
 	{
@@ -47,7 +47,7 @@ void main(void)
 	}
 
 	//line 2 data write
-	cmd_write(0xC0);
+	cmd_write(0xC0);			//0xC0 is 2nd line | 40th character on LCD
 	msg=ln2_msg;
 	while(0 != *msg)
 	{

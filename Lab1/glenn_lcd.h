@@ -13,8 +13,8 @@
 
 //defines for pulse(); function
 #define E 0x00								// Enable 
-#define RW 0x00							// R/W
-#define RS 0x00							// RS
+#define RW 0x00							// Read or Write
+#define RS 0x00							// Register Select
 /*--*/
 
 //prototypes
@@ -25,8 +25,9 @@ void soft_reset(void);					//
 void cmd_write(unsigned char);		// 
 void data_write(unsigned char);		// 
 void lcd_ready(void);					// 
-void pulse (unsigned int comm);		// 
+//void pulse (unsigned int comm);	// DISABLED - not yet implemented
 unsigned char rd_busy(void);			// 
+//void debug(void);						// DEBUG SIGNAL
 
 
 
@@ -72,12 +73,45 @@ void delay(unsigned int count)
 	{
 		count--; 
 		delay=0xA7; 
+		
 		while(delay>0) 
 		{
 			delay--; 
 		}
 	}
 	return;	
+}
+
+
+
+/*****************************************************************************\
+ * Function:		rd_busy
+ * Input:			void
+ * Description:	
+ * Dependencies:	none
+\*****************************************************************************/
+unsigned char rd_busy(void)
+{
+	unsigned char busyflag=0x00;
+	unsigned char busy;
+	
+	PEOUT=0x02; 
+	PEOUT=0x0A; 
+	
+	busyflag=PEIN;
+	busyflag=busyflag&0x80;
+	
+	PEOUT=0x02;
+	PEOUT=0x0A;
+	PEOUT=0x02;
+	
+	//check busy flag
+	if (busyflag==0x0)
+		busy=0;
+	else 
+		busy=1;
+	
+	return(busy);
 }
 
 
@@ -90,18 +124,22 @@ void delay(unsigned int count)
 \*****************************************************************************/
 void init_lcd(void)
 {
-	//call soft reset function
+	//
 	soft_reset();
 	
+	//
 	lcd_ready();
 	cmd_write(0x28);
 	
+	//
 	lcd_ready();
 	cmd_write(0x0F);
-	
+
+	//
 	lcd_ready();
 	cmd_write(0x06);
 	
+	//
 	lcd_ready();
 	cmd_write(0x01);
 }
@@ -112,25 +150,29 @@ void init_lcd(void)
  * Function:		soft_reset
  * Input:			void
  * Description:	
- * Dependencies:	delay |
+ * Dependencies:	delay
 \*****************************************************************************/
 void soft_reset(void)
 {
+	//
 	delay(16);
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;
 	
+	//
 	delay(5);
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;	
-
+	
+	//
 	delay(1);
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;
 
+	//
 	PEOUT=0x20;
 	PEOUT=0x28;
 	PEOUT=0x20;
@@ -142,13 +184,14 @@ void soft_reset(void)
  * Function:		cmd_write
  * Input:			controlval
  * Description:	
- * Dependencies:	lcd_ready | 
+ * Dependencies:	lcd_ready 
 \*****************************************************************************/
 void cmd_write(unsigned char controlval)
 {
 	
 	char highnib, lownib;
 	
+	//
 	highnib=controlval&0xF0;
 	lownib=controlval<<4;
 	
@@ -174,7 +217,7 @@ void cmd_write(unsigned char controlval)
  * Function:		data_write
  * Input:			dataval
  * Description:
- * Dependencies:	lcd_ready |	
+ * Dependencies:	lcd_ready
 \*****************************************************************************/
 void data_write(unsigned char dataval)
 {
@@ -215,48 +258,16 @@ void lcd_ready(void)
 	PEADDR=0X00;
 	
 	while(rd_busy()==1)
-		{
-			//rd_busy(); //--- don't need anymore
-			;
-		}
+	{
+		//rd_busy(); //--- don't need anymore
+		;
+	}
 		
-		init_ports();
+	init_ports();
 		
 	//PEADDR=0X01;		//--- don't need anymore
 	//PECTL=0X00; 		//--- don't need anymore
 	//PEADDR=0X00;		//--- don't need anymore
-}
-
-
-
-/*****************************************************************************\
- * Function:		rd_busy
- * Input:			void
- * Description:	
- * Dependencies:	none
-\*****************************************************************************/
-unsigned char rd_busy(void)
-{
-	unsigned char busyflag=0x00;
-	unsigned char busy;
-	
-	PEOUT=0x02; 
-	PEOUT=0x0A; 
-	
-	busyflag=PEIN;
-	busyflag=busyflag&0x80;
-	
-	PEOUT=0x02;
-	PEOUT=0x0A;
-	PEOUT=0x02;
-	
-	//check busy flag
-	if (busyflag==0x0)
-		busy=0;
-	else 
-		busy=1;
-	
-	return(busy);
 }
 
 

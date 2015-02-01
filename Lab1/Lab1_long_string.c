@@ -38,12 +38,12 @@ void main(void)
 	
 	init_ports();
 	init_lcd();
-
-	
 	cmd_write(0x80);
 	lcd_ready();
 	msg=message;
-		while(0 != *msg){
+	
+		while(0 != *msg)
+		{
 			data_write(*msg++);
 			n++;
 			if(n==0x10){
