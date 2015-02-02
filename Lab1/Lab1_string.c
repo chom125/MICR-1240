@@ -28,6 +28,7 @@ Description:		Writes on line 1 (0x80) and line 2 (0xC0) on a 2x40 LCD
  * Function:		main
  * Input:			void
  * Description:	this function writes on 2 lines of the LCD
+ * Dependencies:	init_ports, init_lcd, cmd_write, data_write
 \*****************************************************************************/
 void main(void)
 {

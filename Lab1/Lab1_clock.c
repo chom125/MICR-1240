@@ -24,11 +24,13 @@ Description:		Displays preset date - uses counters
 /*****************************************************************************\
  * Function:		main
  * Input:			void
- * Description:	this is the main function
+ * Description:	displays the date and time (pre-defined)
+ * Dependencies:	init_ports, init_lcd, delay, cmd_write, sprintf, lcd_ready
+						data_write,
 \*****************************************************************************/
 void main(void)
 {
-	//store a preset date -- make it so it rolls over
+	//initiate and assign values of a date and time
 	int sec=55;
 	int min=59;
 	int hour=23;
@@ -42,38 +44,51 @@ void main(void)
 	init_ports();
 	init_lcd();
 
-	while(1) //increment sec & carry over
+	//iterate through every variables as per common-sense
+	while(1)
+	/*--
+	The sequential-decition-iterative structure below is
+	a counter based on hardware clock NOT realtime-clock.
+	It does not account for leap-year or 28 day month cal.
+	The flow is relatively simple (read the comments)
+	--*/
 	{
+		//increment sec then....
 		delay(4000);
 		sec++;
 		
+		//increment min only when sec==60 then...
 		if (sec==60)
 		{
-			sec=0;
+			sec=0; //reset sec to 0 then...
 			min++;
 		}
-	
-		if (min==60)
+		
+		//increment hour only when min==60 then...
+		if (min==60)		
 		{
-			min=0;
+			min=0; //reset min to 0
 			hour++;
 		}
 		
-		if (hour==24)
+		//increment day only when hour=24 then...
+		if (hour==24)		
 		{
-			hour=0;
+			hour=0; //reset hour to 0
 			day++;
 		}
 		
-		if (day==31)
+		//increment month only when day==31 then...
+		if (day==31)		
 		{
-			day=1;
+			day=1; //set day back to 1
 			month++;
 		}
 	
-		if (month==13)
+		//increment year only when month==13 then...
+		if (month==13)	
 		{
-			month=1;
+			month=1; //set month back to 1
 			year++;
 		}
 		 

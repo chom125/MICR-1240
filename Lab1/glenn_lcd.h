@@ -8,33 +8,22 @@
 #define HDR_EN 0x04						// High Drive Enable
 #define SMRS_EN 0x05						// Stop Mode Recovery
 
-/*-- D I S A B L E D --*
-//not yet implemented
-
-//defines for pulse(); function
-#define E 0x00								// Enable 
-#define RW 0x00							// Read or Write
-#define RS 0x00							// Register Select
-/*--*/
-
 //prototypes
 void init_ports(void);					// Initializes ports
 void delay(unsigned int);				// Defined delays (ms)
-void init_lcd(void);						// initializes LCD 
-void soft_reset(void);					// 
-void cmd_write(unsigned char);		// 
-void data_write(unsigned char);		// 
-void lcd_ready(void);					// 
-//void pulse (unsigned int comm);	// DISABLED - not yet implemented
-unsigned char rd_busy(void);			// 
-//void debug(void);						// DEBUG SIGNAL
+void init_lcd(void);						// Initializes LCD 
+void soft_reset(void);					// Force a software reset
+void cmd_write(unsigned char);		// Writes 8bit cmd in 4 bit nibs
+void data_write(unsigned char);		// Writes 8bit data in 4 nibs
+void lcd_ready(void);					// Return only  when LCD is able to accept
+unsigned char rd_busy(void);			// Read LCD busy flag
 
 
 
 /*****************************************************************************\
  * Function:		init_ports
  * Input:			void
- * Description:	this initiates port E
+ * Description:	initiates port E for push-pull output
  * Dependencies:	none
 \*****************************************************************************/
 void init_ports(void)
@@ -61,7 +50,7 @@ void init_ports(void)
 /*****************************************************************************\
  * Function:		delay
  * Input:			count
- * Description:	this delay is in ms
+ * Description:	software delay in ms
  * Dependencies:	none
 \*****************************************************************************/
 void delay(unsigned int count)
@@ -87,16 +76,18 @@ void delay(unsigned int count)
 /*****************************************************************************\
  * Function:		rd_busy
  * Input:			void
- * Description:	
+ * Description:	test the busy flag
  * Dependencies:	none
 \*****************************************************************************/
 unsigned char rd_busy(void)
 {
+	//
 	unsigned char busyflag=0x00;
+	//
 	unsigned char busy;
 	
-	PEOUT=0x02; 
-	PEOUT=0x0A; 
+	PEOUT=0x02; 						//set RW to 1 (1 = read)
+	PEOUT=0x0A; 						//pulse E high, while RW = 1
 	
 	busyflag=PEIN;
 	busyflag=busyflag&0x80;
@@ -155,19 +146,19 @@ void init_lcd(void)
 void soft_reset(void)
 {
 	//
-	delay(16);
+	delay(16);		//delay > 15ms as per DATASHEET
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;
 	
 	//
-	delay(5);
+	delay(5);		//delay > 14.1ms as per DATASHEET
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;	
 	
 	//
-	delay(1);
+	delay(1);		//delay > 100ns as per DATASHEET
 	PEOUT=0x30;
 	PEOUT=0x38;
 	PEOUT=0x30;
@@ -183,32 +174,35 @@ void soft_reset(void)
 /*****************************************************************************\
  * Function:		cmd_write
  * Input:			controlval
- * Description:	
+ * Description:	used to write a control byte to the display in 4bit mode
  * Dependencies:	lcd_ready 
 \*****************************************************************************/
 void cmd_write(unsigned char controlval)
 {
-	
+	//initiate variables highnib & lownib as char
 	char highnib, lownib;
 	
-	//
-	highnib=controlval&0xF0;
-	lownib=controlval<<4;
+	//assign hignib to accept data but reject changes to control lines
+	highnib = controlval&0xF0;
 	
-	//call lcd_read() function
+	//shift controlval 4 places to the left and assign it to lownib
+	lownib = controlval<<4;
+	
+	//perform lcd_ready function
 	lcd_ready();
 	
+	//set all control bits (E,RS,RW) to LOW
 	PEOUT=0x00;
 	
 	//high nibble
-	PEOUT=highnib;
-	PEOUT=highnib^0x08;
-	PEOUT=highnib;
+	PEOUT=highnib;					//pulse controlval & keep control bits low
+	PEOUT=highnib^0x08;			//pulse above again but + Enable = High (arm the latch)
+	PEOUT=highnib;					//pulse Enable=high to latch data to LCD internal register
 	
 	//low nibble
-	PEOUT=lownib;
-	PEOUT=lownib^0x08;
-	PEOUT=lownib;
+	PEOUT=lownib;					//same as above
+	PEOUT=lownib^0x08;			//dito
+	PEOUT=lownib;					//dito
 }
 
 
@@ -259,34 +253,12 @@ void lcd_ready(void)
 	
 	while(rd_busy()==1)
 	{
-		//rd_busy(); //--- don't need anymore
 		;
 	}
 		
 	init_ports();
-		
-	//PEADDR=0X01;		//--- don't need anymore
-	//PECTL=0X00; 		//--- don't need anymore
-	//PEADDR=0X00;		//--- don't need anymore
 }
 
 
-
-/*****************************************************************************\
- * Function:		pulse
- * Input:			comm
- * Description:
- * Dependencies:	none	
-\*****************************************************************************/
-
-/*--	D I S A B L E D --*
-//not yet implemented
-
-void pulse (unsigned int comm)
-{
-	PEOUT = comm;
-}
-
-/*--*/
 
 #endif	//GLENN_LCD_H_
