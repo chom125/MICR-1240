@@ -89,12 +89,12 @@ unsigned char rd_busy(void)
 	PEOUT=0x02; 						//set RW to 1 (1 = read)
 	PEOUT=0x0A; 						//pulse E high, while RW = 1
 	
-	busyflag=PEIN;
-	busyflag=busyflag&0x80;
+	busyflag=PEIN;						//
+	busyflag=busyflag&0x80;			//
 	
-	PEOUT=0x02;
-	PEOUT=0x0A;
-	PEOUT=0x02;
+	PEOUT=0x02;							//set RW to 1 (1 = read)
+	PEOUT=0x0A;							//pulse E high, while RW = 1
+	PEOUT=0x02;							//set RW to 1 (1 = read)
 	
 	//check busy flag
 	if (busyflag==0x0)
@@ -163,7 +163,6 @@ void soft_reset(void)
 	PEOUT=0x38;
 	PEOUT=0x30;
 
-	//
 	PEOUT=0x20;
 	PEOUT=0x28;
 	PEOUT=0x20;
@@ -221,18 +220,18 @@ void data_write(unsigned char dataval)
 	lownibdata=(dataval<<4)|0x04;
 	
 	lcd_ready();
-	
-	PEOUT=0x04;
+												//7654  E RS RW PE0
+	PEOUT=0x04;								//0000  0 1  0   0
 	
 	//high nibble data
-	PEOUT=highnibdata;
-	PEOUT=highnibdata^0x08;
-	PEOUT=highnibdata;
+	PEOUT=highnibdata;					//
+	PEOUT=highnibdata^0x08;				//
+	PEOUT=highnibdata;					//
 	
 	//low nibble data
-	PEOUT=lownibdata;
-	PEOUT=lownibdata^0x08;
-	PEOUT=lownibdata;
+	PEOUT=lownibdata;						//
+	PEOUT=lownibdata^0x08;				//
+	PEOUT=lownibdata;						//
 }
 
 
@@ -246,10 +245,11 @@ void data_write(unsigned char dataval)
 void lcd_ready(void)
 {
 	//set port E to be inputs
-	PEADDR=0X01;
-	PECTL=0XF0;
+							// 
+	PEADDR=0X01;		//0000 0001 - 
+	PECTL=0XF0;			//1111 0000 - 
 	
-	PEADDR=0X00;
+	PEADDR=0X00;		
 	
 	while(rd_busy()==1)
 	{
