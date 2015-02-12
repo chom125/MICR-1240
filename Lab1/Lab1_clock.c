@@ -31,7 +31,7 @@ Description:		Displays preset date - uses counters
 void main(void)
 {
 	//initiate and assign values of a date and time
-	int sec=55;
+	int sec=50;
 	int min=59;
 	int hour=23;
 	int day=23;
@@ -92,7 +92,7 @@ void main(void)
 			year++;
 		}
 		 
-		cmd_write(0x84);
+		cmd_write(0x84); //1111 
 		sprintf(time,"%02d:%02d:%02d",hour, min, sec);	//put var into %02d
 		lcd_ready();
 		msg=time;

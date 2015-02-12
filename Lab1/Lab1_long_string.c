@@ -20,7 +20,7 @@ Description:		Tests long string
 #include "glenn_lcd.h"		//used to isolate LCD functions from main
 
 //LCD OUTPUT - EDIT THIS LINE
-#define TICKER "Long message will cycle between line 1 and line 2"			//<--- EDIT THIS LINE
+#define TICKER "Hofstadters Law: It always takes longer than you expect, even when you take into account Hofstadters Law."			//<--- EDIT THIS LINE
 
 
 
