@@ -8,7 +8,7 @@
 #define HDR_EN 0x04						// High Drive Enable
 #define SMRS_EN 0x05						// Stop Mode Recovery
 
-//prototypes
+//lcd prototypes
 void init_port_e(void);					// Initializes ports
 void delay(unsigned int);				// Defined delays (ms)
 void init_lcd(void);						// Initializes LCD 
@@ -114,24 +114,31 @@ unsigned char rd_busy(void)
 \*****************************************************************************/
 void init_lcd(void)
 {
-	//
-	soft_reset();
+	char ln1_msg[] = "Welcome to lab2";			
+	char ln2_msg[] = "Press any key...";
+	char *msg;
 	
-	//
-	lcd_ready();
-	cmd_write(0x28);
+	soft_reset();					//run soft reset
+	cmd_write (0x28);
+	cmd_write (0x0f);				//display off	
+	cmd_write (0x06);				//display clear	
+	cmd_write (0x01);				//entry mode set
+	cmd_write(0x0C);
+	msg=ln1_msg;
+	while (23<*msg)				//write welcom message
+	{			
+	data_write(*msg++);		
+	}
+	cmd_write(0xC0);
 	
-	//
-	lcd_ready();
-	cmd_write(0x0F);
-
-	//
-	lcd_ready();
-	cmd_write(0x06);
-	
-	//
-	lcd_ready();
-	cmd_write(0x01);
+	msg=ln2_msg;	
+	while (23<*msg)
+	{
+	data_write(*msg++);
+	}
+	delay(15000);					//display delay
+	cmd_write(0x00);				//reset display
+	cmd_write (0x01);				//display clear
 }
 
 
@@ -244,9 +251,9 @@ void data_write(unsigned char dataval)
 void lcd_ready(void)
 {
 	//set port E to be inputs
-							// 
-	PEADDR=0X01;		//0000 0001 - 
-	PECTL=0XF0;			//1111 0000 - 
+						
+	PEADDR=0X01;		//0000 0001 
+	PECTL=0XF0;			//1111 0000
 	
 	PEADDR=0X00;		
 	

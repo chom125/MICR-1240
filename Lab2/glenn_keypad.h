@@ -8,13 +8,13 @@
 #define HDR_EN 0x04						// High Drive Enable
 #define SMRS_EN 0x05						// Stop Mode Recovery
 
-//prototypes
-void init_port_d(void);					// Initializes ports
-int keyindex(void);
-unsigned char anykey(void);
-int keyval(int);
-void waitkeypressed(void);
-void waitkeyreleased(void);
+//keypad prototypes
+void init_port_d(void);					// Initializes port D
+int keyindex(void);						// 
+unsigned char anykey(void);			// 
+char keyval(char);						// 
+void waitkeypressed(void);				// 
+void waitkeyreleased(void);			// 
 
 
 /*****************************************************************************\
@@ -29,7 +29,7 @@ void init_port_d(void)
 	PDADDR = ALT_FUN;
 	PDCTL = 0X00;
 	
-	//set 6 5 4 to i/p, rest to o/p
+	//0x70 (0111 0000) = Pins: 6 5 4 input | Pins: others IS output
 	PDADDR = DATA_DIR;
 	PDCTL = 0X70;
 	
@@ -64,8 +64,7 @@ char rowselect=0xF7;
 		{break;}
 		
 		rowcnt++;
-		rowselect=rowselect>>1;	
-			
+		rowselect=rowselect>>1;				
 	}
 	
 	switch (coldata)
@@ -85,6 +84,112 @@ char rowselect=0xF7;
     default:
 		return(0xFF);
    }	
+}
+
+
+/*****************************************************************************\
+ * Function: anykey		
+ * Input:			
+ * Description:	
+ * Dependencies:	
+\*****************************************************************************/
+unsigned char anykey(void){
+unsigned char ip;
+char ipval;
+	
+PDOUT=0x00;
+ipval=PDIN&0x70;
+
+	if(ipval==0x70){
+		ip=0;
+		return(ip);
+	}
+	else{
+		ip=1;
+		return(ip);
+	}
+}
+
+
+/*****************************************************************************\
+ * Function: keyval		
+ * Input:			
+ * Description:	
+ * Dependencies:	
+\*****************************************************************************/
+
+char keyval(char index){
+char table[]={3,2,1,6,5,4,9,8,7,11,0,10};
+char key;
+key=table[index];
+return(key);
+}
+
+
+/*****************************************************************************\
+ * Function: waitkeypressed		
+ * Input:			
+ * Description:	
+ * Dependencies:	
+\*****************************************************************************/
+void waitkeypressed(void){
+
+	while(anykey()==0){
+		;
+		}
+	delay(2);
+return;
+}
+
+
+/*****************************************************************************\
+ * Function: waitkeyreleased		
+ * Input:			
+ * Description:	
+ * Dependencies:	
+\*****************************************************************************/
+void waitkeyreleased(void){
+
+	while(anykey()!=0){
+		; 
+		}
+	delay(2);
+return;
+}
+
+
+/*****************************************************************************\
+ * Function: string_write		
+ * Input:			
+ * Description:	
+ * Dependencies:	
+\*****************************************************************************/
+void string_write(char *message){
+
+char line=1;
+int n=0x00;
+char *p_message;
+
+cmd_write(0x80);
+lcd_ready();
+p_message=message;
+	while(0 != *p_message){
+		data_write(*p_message++);
+		n++;
+		if(n==0x10){
+			if(line==1)
+				line=2;
+			else
+				line=1;
+		
+			if (line==1)
+				cmd_write(0x80);
+			else
+				cmd_write(0xC0);
+			n=0x00;
+			delay(5000);					//delay 2nd line msg
+			lcd_ready();}		
+		}	
 }
 
 #endif		//GLENN_KEYPAD_H_
