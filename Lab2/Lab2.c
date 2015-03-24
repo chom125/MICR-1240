@@ -52,17 +52,21 @@ cmd_write(0x0C);
    And Zilog will continue running it forever just because . . . 
 	--*/
 	
-	while(1){ 
+	while(1)
+	{ 
 		index=keyindex();
 
-		if(index>11){
+		if(index>11)
+		{
 			lcd_ready();
 			cmd_write(0x01);
 			lcd_ready();
 			cmd_write(0x84);
 			string_write(error);
-			}
-			else{
+		}
+			
+		else
+		{
 			key=keyval(index);
 			lcd_ready();
 			cmd_write(0x01);
@@ -71,7 +75,7 @@ cmd_write(0x0C);
 			sprintf(val,"%d",key); 		
 			lcd_ready();          
 			string_write(val);
-			}	
+		}	
 			
 	/*--
 	This is the loop that doesn't end
