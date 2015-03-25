@@ -2,21 +2,25 @@
 #define GLENN_LCD_H_
 
 //defines for port subregisters
-#define DATA_DIR 0x01					// Data Direction
-#define ALT_FUN 0x02						// Alternate function
-#define OUT_CTL 0x03						// Output Control
-#define HDR_EN 0x04						// High Drive Enable
-#define SMRS_EN 0x05						// Stop Mode Recovery
+#define DATA_DIR 0x01						// Data Direction
+#define ALT_FUN 0x02							// Alternate function
+#define OUT_CTL 0x03							// Output Control
+#define HDR_EN 0x04							// High Drive Enable
+#define SMRS_EN 0x05							// Stop Mode Recovery
+
+//defines for LCD welcome message
+#define MSG1_INIT "Welcome to lab2"		// Line 1 Welcome message
+#define MSG2_INIT "Press any key..."	// Line 2 Welcome message
 
 //lcd prototypes
-void init_port_e(void);					// Initializes ports
-void delay(unsigned int);				// Defined delays (ms)
-void init_lcd(void);						// Initializes LCD 
-void soft_reset(void);					// Force a software reset
-void cmd_write(unsigned char);		// Writes 8bit cmd in 4 bit nibs
-void data_write(unsigned char);		// Writes 8bit data in 4 nibs
-void lcd_ready(void);					// Return only  when LCD is able to accept
-unsigned char rd_busy(void);			// Read LCD busy flag
+void init_port_e(void);						// Initializes ports
+void delay(unsigned int);					// Defined delays (ms)
+void init_lcd(void);							// Initializes LCD 
+void soft_reset(void);						// Force a software reset
+void cmd_write(unsigned char);			// Writes 8bit cmd in 4 bit nibs
+void data_write(unsigned char);			// Writes 8bit data in 4 nibs
+void lcd_ready(void);						// Return only  when LCD is able to accept
+unsigned char rd_busy(void);				// Read LCD busy flag
 
 
 
@@ -114,8 +118,8 @@ unsigned char rd_busy(void)
 \*****************************************************************************/
 void init_lcd(void)
 {
-	char ln1_msg[] = "Welcome to lab2";			
-	char ln2_msg[] = "Press any key...";
+	char ln1_msg[] = MSG1_INIT;			
+	char ln2_msg[] = MSG2_INIT;
 	char *msg;
 	
 	soft_reset();					//run soft reset
