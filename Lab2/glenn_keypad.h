@@ -10,11 +10,11 @@
 
 //keypad prototypes
 void init_port_d(void);					// Initializes port D
-int keyindex(void);						// 
-unsigned char anykey(void);			// 
-char keyval(char);						// 
-void waitkeypressed(void);				// 
-void waitkeyreleased(void);			// 
+int keyindex(void);						// Get the key value for lookup table 
+unsigned char anykey(void);			// Poll the keypad
+char keyval(char);						// Lookup table
+void waitkeypressed(void);				// Wait for key press
+void waitkeyreleased(void);			// Wait for key release
 
 
 /*****************************************************************************\
@@ -48,20 +48,27 @@ void init_port_d(void)
  * Description:	
  * Dependencies:	
 \*****************************************************************************/
-int keyindex(void){
-int rowcnt=0, colcnt=0, coldata=0;
-char rowselect=0xF7;
+int keyindex(void)
+{
+	int 	rowcnt=0,							//keep track of row numbers
+			colcnt=0, 							//keep track of column value
+			coldata=0;							//read the value of PDIN
+			
+	char rowselect=0xF7;						//1111 0111 value to select row
 	
-	waitkeyreleased();
-	waitkeypressed();
+	waitkeyreleased();						//wait key to be released
+	waitkeypressed();							//wait key to be pressed
 	
-	while(rowcnt<4){
+	while(rowcnt<4)
+	{
 		PDOUT=rowselect;
 		coldata=PDIN;
 		coldata=coldata&0x70;	
 		
 		if(coldata!=0x70) 
-		{break;}
+		{
+			break;
+		}
 		
 		rowcnt++;
 		rowselect=rowselect>>1;				
@@ -93,18 +100,22 @@ char rowselect=0xF7;
  * Description:	
  * Dependencies:	
 \*****************************************************************************/
-unsigned char anykey(void){
-unsigned char ip;
-char ipval;
+unsigned char anykey(void)
+{
+	unsigned char ip;
+	char ipval;
 	
-PDOUT=0x00;
-ipval=PDIN&0x70;
+	PDOUT=0x00;
+	ipval=PDIN&0x70;
 
-	if(ipval==0x70){
+	if(ipval==0x70)
+	{
 		ip=0;
 		return(ip);
 	}
-	else{
+	
+	else
+	{
 		ip=1;
 		return(ip);
 	}
@@ -118,11 +129,12 @@ ipval=PDIN&0x70;
  * Dependencies:	
 \*****************************************************************************/
 
-char keyval(char index){
-char table[]={3,2,1,6,5,4,9,8,7,11,0,10};
-char key;
-key=table[index];
-return(key);
+char keyval(char index)
+{
+	char table[]={3,2,1,6,5,4,9,8,7,11,0,10};
+	char key;
+	key=table[index];
+	return(key);
 }
 
 
@@ -132,13 +144,14 @@ return(key);
  * Description:	
  * Dependencies:	
 \*****************************************************************************/
-void waitkeypressed(void){
-
-	while(anykey()==0){
-		;
-		}
+void waitkeypressed(void)
+{
+	while(anykey()==0)
+	{
+		; 
+	}
 	delay(2);
-return;
+	return;
 }
 
 
@@ -148,11 +161,12 @@ return;
  * Description:	
  * Dependencies:	
 \*****************************************************************************/
-void waitkeyreleased(void){
-
-	while(anykey()!=0){
+void waitkeyreleased(void)
+{
+	while(anykey()!=0)
+	{
 		; 
-		}
+	}
 	delay(2);
 return;
 }
@@ -164,19 +178,23 @@ return;
  * Description:	
  * Dependencies:	
 \*****************************************************************************/
-void string_write(char *message){
+void string_write(char *message)
+{	
+	char line=1;
+	int n=0x00;
+	char *p_message;
 
-char line=1;
-int n=0x00;
-char *p_message;
-
-cmd_write(0x80);
-lcd_ready();
-p_message=message;
-	while(0 != *p_message){
+	cmd_write(0x80);
+	lcd_ready();
+	p_message=message;
+	
+	while(0 != *p_message)
+	{
 		data_write(*p_message++);
 		n++;
-		if(n==0x10){
+		
+		if(n==0x10)
+		{
 			if(line==1)
 				line=2;
 			else
@@ -188,8 +206,9 @@ p_message=message;
 				cmd_write(0xC0);
 			n=0x00;
 			delay(5000);					//delay 2nd line msg
-			lcd_ready();}		
-		}	
+			lcd_ready();
+		}		
+	}	
 }
 
 #endif		//GLENN_KEYPAD_H_

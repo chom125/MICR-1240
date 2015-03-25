@@ -29,21 +29,18 @@ Description:		This lab introduces inputs to the LCD lab (lab1)
 \*****************************************************************************/
 void main(void)
 {
-int index;
-char val[ ];
-char error[ ]="Too fast bro... Slow down";
-int key;
+	int index;
+	char val[ ];
+	char error[ ]="Too fast bro... Slow down";
+	int key;
 
-//initializations
-init_port_d();						
-init_port_e();						
-init_lcd();
-lcd_ready();
+	//initializations
+	init_port_d();						
+	init_port_e();						
+	init_lcd();=
+	lcd_ready();
 
-//pre-game message
-
-
-cmd_write(0x0C); 
+	cmd_write(0x0C); 
 	
 	/*--
 	This is the loop that doesn't end
