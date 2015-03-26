@@ -46,7 +46,7 @@ void init_port_d(void)
 /*****************************************************************************\
  * Function: keyindex		
  * Input: void
- * Description: This function scans for key inputs and index's the pos.
+ * Description: This function scans for key inputs and index's the value
  * Dependencies: waitkeyreleased | waitkeypressed
 \*****************************************************************************/
 int keyindex(void)
@@ -78,7 +78,7 @@ int keyindex(void)
 		/*--
 		Continue with the next row if coldata is still 0111 0000
 		--*/
-		rowcnt++;									//increment to rowcnt
+		rowcnt++;									//increment rowcnt
 		rowselect = rowselect >> 1;			//shift '0' to next location	
 	}
 	
@@ -88,24 +88,31 @@ int keyindex(void)
 	--*/
 	switch (coldata)
 	{
-   case 0x60:										//first column pressed (X110 0000)
+	//case for first column pressed (X110 0000)
+   case 0x60:										
 		colcnt = 0x00; 
 		return(3 * rowcnt + colcnt);
 		break;
-		
-   case 0x50:										//second column pressed (X101 0000)
+	
+	//case for second column pressed (X101 0000)
+   case 0x50:										
 		colcnt = 0x01;
 		return(3 * rowcnt + colcnt);
 		break;
-		
-   case 0x30:										//third column pressed (X011 0000)
-		colcnt = 0x02; 
+	
+	//case for third column pressed (X011 0000)	
+   case 0x30:										
+		colcnt = 0x02;
 		return(3 * rowcnt + colcnt);
 		break;
 		
 	/*--
-	This is the defult case for error.
+	This is the defult case for giving an error.
 	It returns 1111 1111 to keyindex()
+	
+	This case is usually triggered when the 
+	while loop and coldata has a value not
+	defined in the case statement..
 	--*/	
    default:
 		return(0xFF);
@@ -125,15 +132,19 @@ unsigned char anykey(void)
 	unsigned char ip;
 	char ipval;
 	
-	PDOUT = 0x00;
-	ipval = PDIN & 0x70;
+	PDOUT = 0x00;							//set all pins to low
+	ipval = PDIN & 0x70;					//
 
-	if(ipval == 0x70)
+	/*--
+	--*/
+	if(ipval == 0x70)	
 	{
 		ip = 0;
 		return(ip);
 	}
 	
+	/*--
+	--*/
 	else
 	{
 		ip = 1;
@@ -151,9 +162,9 @@ unsigned char anykey(void)
 
 char keyval(char index)
 {
-	char table[]={3,2,1,6,5,4,9,8,7,11,0,10};
+	char table[] = {3,2,1,6,5,4,9,8,7,11,0,10};
 	char key;
-	key=table[index];
+	key = table[index];
 	return(key);
 }
 
