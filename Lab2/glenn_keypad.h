@@ -68,7 +68,7 @@ int keyindex(void)
 		
 		/*--
 		Break the while loop if coldata does not equal 0111 0000. Otherwise
-		run the while loop over and over until a change is detected in PDIN
+		procede to the next step below...
 		--*/
 		if(coldata != 0x70) 						
 		{
@@ -122,51 +122,69 @@ int keyindex(void)
 
 
 /*****************************************************************************\
- * Function: anykey		
- * Input:			
- * Description:	
- * Dependencies:	
-\*****************************************************************************/
-unsigned char anykey(void)
-{
-	unsigned char ip;
-	char ipval;
-	
-	PDOUT = 0x00;							//set all pins to low
-	ipval = PDIN & 0x70;					//
-
-	/*--
-	--*/
-	if(ipval == 0x70)	
-	{
-		ip = 0;
-		return(ip);
-	}
-	
-	/*--
-	--*/
-	else
-	{
-		ip = 1;
-		return(ip);
-	}
-}
-
-
-/*****************************************************************************\
  * Function: keyval		
- * Input:			
- * Description:	
- * Dependencies:	
+ * Input: index		
+ * Description: 	
+ * Dependencies: none
 \*****************************************************************************/
-
 char keyval(char index)
 {
+	/*--
+	Formula for this lookup table is index = (3*row) + column
+	array slot:		[0][1][2][3][4][5][6][7][8][9] [10] [11] <--- imaginary slot
+	keypad val:		[3][2][1][6][5][4][9][8][7][11] [0] [10] <--- this is what gets printed
+	
+	for example: 	key #7 is located in row 2, col 2
+						using (3*row)+col gives us 
+						(3*2)+2 = 8
+						
+						This means #7 is in array slot 8 as
+						shown above.
+	--*/
 	char table[] = {3,2,1,6,5,4,9,8,7,11,0,10};
 	char key;
 	key = table[index];
 	return(key);
 }
+
+
+
+/*****************************************************************************\
+ * Function: anykey		
+ * Input: void			
+ * Description: A quick test to see if anykey is even pressed
+ * Dependencies: none
+\*****************************************************************************/
+unsigned char anykey(void)
+{
+	unsigned char ip;						//storage for input test result
+	char ipval;								//storage for input value
+	
+	PDOUT = 0x00;							//set all pins to low
+	ipval = PDIN & 0x70;					//read PDIN
+
+	/*--
+	This if-else statement will test
+	to see if PDIN has changed or not.
+	
+	No change gives input value a '0'
+	A change gives input value a '1'
+	--*/
+	if(ipval == 0x70)	
+	{
+		//return 0 since nothing changed (still 0x70)
+		ip = 0;
+		return(ip);
+	}
+	
+	else
+	{
+		//something changed, return a 1
+		ip = 1;
+		return(ip);
+	}
+}
+
 
 
 /*****************************************************************************\
@@ -177,13 +195,14 @@ char keyval(char index)
 \*****************************************************************************/
 void waitkeypressed(void)
 {
-	while(anykey()==0)
+	while(anykey() == 0)
 	{
 		; 
 	}
 	delay(2);
 	return;
 }
+
 
 
 /*****************************************************************************\
@@ -203,43 +222,5 @@ return;
 }
 
 
-/*****************************************************************************\
- * Function: string_write		
- * Input:			
- * Description:	
- * Dependencies:	
-\*****************************************************************************/
-void string_write(char *message)
-{	
-	char line=1;
-	int n=0x00;
-	char *p_message;
-
-	cmd_write(0x80);
-	lcd_ready();
-	p_message=message;
-	
-	while(0 != *p_message)
-	{
-		data_write(*p_message++);
-		n++;
-		
-		if(n==0x10)
-		{
-			if(line==1)
-				line=2;
-			else
-				line=1;
-		
-			if (line==1)
-				cmd_write(0x80);
-			else
-				cmd_write(0xC0);
-			n=0x00;
-			delay(5000);					//delay 2nd line msg
-			lcd_ready();
-		}		
-	}	
-}
 
 #endif		//GLENN_KEYPAD_H_
