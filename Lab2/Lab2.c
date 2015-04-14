@@ -15,10 +15,13 @@ Programmer:			Glenn Lopez
 Description:		This lab introduces inputs to the LCD lab (lab1)	
 ---------------------------------------------------------------------------------*/
 
-#include <ez8.h>					//used for Z8 uC port
+#include <ez8.h>					//used for Z8 uC defines and subroutine stuff
 #include <stdio.h>				//used for sprintf (used in main function)
-#include "glenn_lcd.h"			//used to isolate LCD functions from main function
-#include "glenn_keypad.h"		//used to isolate kepad functions from main function
+#include "glenn_lcd.h"			//used for displaying inputs from the keypad
+#include "glenn_keypad.h"		//used for user inputs
+
+//defines for error msg
+#define ERR_MSG "Too fast bro... Slow down"
 
 
 
@@ -29,16 +32,16 @@ Description:		This lab introduces inputs to the LCD lab (lab1)
 \*****************************************************************************/
 void main(void)
 {
-	int index;
-	char val[ ];
-	char error[ ]="Too fast bro... Slow down";
+	int index;									//holds the 
+	char val[];									
+	char error[] = ERR_MSG;					//holds the error message
 	int key;
 
 	//initializations
-	init_port_d();						
-	init_port_e();						
-	init_lcd();=
-	lcd_ready();
+	init_port_d();								//initialize keypad port		
+	init_port_e();								//initialize lcd port
+	init_lcd();									//initialize the lcd
+	lcd_ready();								//check to see if lcd is ready first
 
 	cmd_write(0x0C); 
 	
@@ -51,25 +54,31 @@ void main(void)
 	
 	while(1)
 	{ 
-		index=keyindex();
+		index = keyindex();					//get the value for the lookup table
 
-		if(index>11)
+		//check for any error
+		if(index > 11)							
 		{
-			lcd_ready();
-			cmd_write(0x01);
-			lcd_ready();
-			cmd_write(0x84);
+			lcd_ready();						//check if lcd is ready for commands
+			cmd_write(0x01);					//clear the screen
+			
+			lcd_ready();						//check if lcd is ready for commands
+			cmd_write(0x84);					//
+			
 			string_write(error);
 		}
 			
 		else
 		{
-			key=keyval(index);
+			key = keyval(index);
+			
 			lcd_ready();
 			cmd_write(0x01);
+			
 			lcd_ready();
 			cmd_write(0x84);
 			sprintf(val,"%d",key); 		
+			
 			lcd_ready();          
 			string_write(val);
 		}	

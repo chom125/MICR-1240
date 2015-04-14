@@ -124,7 +124,7 @@ int keyindex(void)
 /*****************************************************************************\
  * Function: keyval		
  * Input: index		
- * Description: 	
+ * Description: a look up table function using single dimention array
  * Dependencies: none
 \*****************************************************************************/
 char keyval(char index)
@@ -138,7 +138,7 @@ char keyval(char index)
 						using (3*row)+col gives us 
 						(3*2)+2 = 8
 						
-						This means #7 is in array slot 8 as
+						This means key #7 is in array slot 8 as
 						shown above.
 	--*/
 	char table[] = {3,2,1,6,5,4,9,8,7,11,0,10};
@@ -152,7 +152,7 @@ char keyval(char index)
 /*****************************************************************************\
  * Function: anykey		
  * Input: void			
- * Description: A quick test to see if anykey is even pressed
+ * Description: function for tessting to see if anykey is pressed
  * Dependencies: none
 \*****************************************************************************/
 unsigned char anykey(void)
@@ -189,9 +189,9 @@ unsigned char anykey(void)
 
 /*****************************************************************************\
  * Function: waitkeypressed		
- * Input:			
- * Description:	
- * Dependencies:	
+ * Input: void
+ * Description: wait until a key is pressed
+ * Dependencies: delay | anykey
 \*****************************************************************************/
 void waitkeypressed(void)
 {
@@ -199,17 +199,18 @@ void waitkeypressed(void)
 	{
 		; 
 	}
-	delay(2);
-	return;
+	
+delay(2);
+return;
 }
 
 
 
 /*****************************************************************************\
  * Function: waitkeyreleased		
- * Input:			
- * Description:	
- * Dependencies:	
+ * Input: void
+ * Description: wait intil key is released
+ * Dependencies: delay | anykey
 \*****************************************************************************/
 void waitkeyreleased(void)
 {
@@ -217,7 +218,8 @@ void waitkeyreleased(void)
 	{
 		; 
 	}
-	delay(2);
+
+delay(2);
 return;
 }
 

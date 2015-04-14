@@ -271,4 +271,43 @@ void lcd_ready(void)
 
 
 
+/*****************************************************************************\
+ * Function: string_write		
+ * Input:			
+ * Description:	
+ * Dependencies:	
+\*****************************************************************************/
+void string_write(char *message)
+{	
+	char line=1;
+	int n=0x00;
+	char *p_message;
+
+	cmd_write(0x80);
+	lcd_ready();
+	p_message=message;
+	
+	while(0 != *p_message)
+	{
+		data_write(*p_message++);
+		n++;
+		
+		if(n==0x10)
+		{
+			if(line==1)
+				line=2;
+			else
+				line=1;
+		
+			if (line==1)
+				cmd_write(0x80);
+			else
+				cmd_write(0xC0);
+			n=0x00;
+			delay(5000);					//delay 2nd line msg
+			lcd_ready();
+		}		
+	}	
+}
+
 #endif	//GLENN_LCD_H_
