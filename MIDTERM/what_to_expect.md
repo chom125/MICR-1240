@@ -13,3 +13,4 @@ theory group.
 Written portion:
 	- know your keypad (what hex value is given when a button is pressed)
 	- know how to read the datasheet (the command code specifically)
+	see: http://www.dinceraydin.com/lcd/commands.htm
