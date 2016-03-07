@@ -1,6 +1,6 @@
 **//discontinued...**
 
-Since I'm no longer a student at RRC, this repo (MICR-1240) will no longer be maintained. All my labs from year 1,2,3 (600mb full of 100% completion) is now available for download to students to check thier work. This is a tool for double checking your work -- don't cheat, you paid money to learn... not to get a diploma. 
+Since I'm no longer a student at RRC, this repo (MICR-1240) will no longer be maintained. All my labs from year 1,2,3 (600mb full of 100% completion) is now available for download to students to check thier work or meet deadlines. -- don't cheat, you paid money to learn... not to get a diploma. 
 >:paperclip: **Download:** 
 
 
