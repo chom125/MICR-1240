@@ -1,7 +1,10 @@
 //discontinued...
+Since I'm no longer a student at RRC, this repo (MICR-1240) will no longer be maintained. 
 
-Since I'm no longer a student at RRC, this repo (MICR-1240) will no longer be maintained. What you see here is what you get. If you are interested in downloading all my labs from years 1, year 2, and year 3... **I have made all 670.2MB (packed full of 100% completion) available for download on Usenet**. Just search "rrc_labs_eet" under alt.binaries.e-book or via binsearch.info for the nzb file.
+I've made all my labs from year 1,2,3 (all 600mb 100% completion) available for download to help students double check thier work. You can download the .nzb file at https://mega.nz/#!YE0kDRTL and load it to your Usenet client (a subscription to usenet network is required for downloading .nzb files). Alternatively you can just search "rrc_labs_eet" under **alt.binaries.e-book** or do a binsearch.info for rrc_labs_eet.zip for the nzb file.
 
-If you are not familiar with Usenet/don't have access to Usenet, I recomend doing a 1 month free trial via Giganews.com -- Usenet is blazing fast compared to BitTorrent (upto 102MB/s transfer rates). 
+If you are not familiar with Usenet, the front-end works similar to how BitTorrent works (the back-end is just Arpanet 2.0 aka Internet 0.1 alpha -- in a nut shell, its O.G. internet). Usenet is blazing fast, decentralized, and will retain the file for 5 years... which is why I chose to upload it there. 
 
-Once you have rrc_labs_eet.zip downloaded, you may share it in any way or form (Megashare, Dropbox, etc...). Giganews will keep the files indexed in its usenet server for 5 years (till 2021).
+If you're despirate to download the file but don't have a Usenet subscription, Giganews.com offers a 1mo. free trial (Credit Card req.). I highly suggest you try them out. 
+
+
