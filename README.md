@@ -14,5 +14,3 @@ https://mega.nz/#!hJ1y0RZB!2QW2sfkppmCrd-O4fcAMx4gNx7otBD6H448sf7EROAs
 https://mega.nz/#!wFsijCKI!nT3-cIcjFPK_e8HUUo3e_5HU7LAlKJXPHjb_KC2Yu88
 
 https://mega.nz/#!wVsF1LYb!L_h9XaqYS_jIs5uHb1DRWWoP8yyHyx_IRRnyVEo2F0Y
-
-https://mega.nz/#!sYF2BZSR!tNys0zdgjtT2zAdE7xS2lox_rCxklZhbeGLoW33pCwE
