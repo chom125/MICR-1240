@@ -5,7 +5,7 @@ Since I'm no longer a student at RRC, this repo (MICR-1240) will no longer be ma
 
 >:key: **Decryption Key:** !tNys0zdgjtT2zAdE7xS2lox_rCxklZhbeGLoW33pCwE
 
->:paperclip: **Usenet Mirror:** https://mega.nz/#!YE0kDRTL!T2eocMEFgQ7i8UnwdXqBazskp6YJpJR4xa7GSTIgds4
+>:page_facing_up: **Usenet .nzb file:** https://mega.nz/#!YE0kDRTL!T2eocMEFgQ7i8UnwdXqBazskp6YJpJR4xa7GSTIgds4
 
 Other stuff
 ---
