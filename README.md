@@ -5,7 +5,10 @@ Since I'm no longer a student at RRC, this repo (MICR-1240) will no longer be ma
 
 >:key: **Decryption Key:** !tNys0zdgjtT2zAdE7xS2lox_rCxklZhbeGLoW33pCwE
 
-**Backup Link:** Should RRC or Github ask me to take down the link, an .nzb file is made avaiable for Usenet subscribers. It will remain on Giganews servers till 2021 | Alternatively you can just search **"rrc_labs_eet"** under **alt.binaries.e-book** or do a binsearch.info for rrc_labs_eet.zip for the nzb file.
->:paperclip: **NZB File:** https://mega.nz/#!YE0kDRTL!T2eocMEFgQ7i8UnwdXqBazskp6YJpJR4xa7GSTIgds4
+>:paperclip: **Usernet .NZB:** https://mega.nz/#!YE0kDRTL!T2eocMEFgQ7i8UnwdXqBazskp6YJpJR4xa7GSTIgds4
 
-As always, you are free to share, take credit, make money or do what ever you like with the files. My lab work is now public domain material.
+Other stuff:
+https://mega.nz/#!hJ1y0RZB!2QW2sfkppmCrd-O4fcAMx4gNx7otBD6H448sf7EROAs
+https://mega.nz/#!wFsijCKI!nT3-cIcjFPK_e8HUUo3e_5HU7LAlKJXPHjb_KC2Yu88
+https://mega.nz/#!wVsF1LYb!L_h9XaqYS_jIs5uHb1DRWWoP8yyHyx_IRRnyVEo2F0Y
+https://mega.nz/#!sYF2BZSR!tNys0zdgjtT2zAdE7xS2lox_rCxklZhbeGLoW33pCwE
